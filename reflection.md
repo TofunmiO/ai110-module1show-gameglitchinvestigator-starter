@@ -7,6 +7,9 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 - What did the game look like the first time you ran it?
 - List at least two concrete bugs you noticed at the start  
   (for example: "the hints were backwards").
+1. The hints were wrong. It said go lower when I put 1. It should not accept 1.
+2. The game allowed me to submit 0 when the only allowed guess was 1-100, and the hint even said go lower at 0.
+3. It told me out of attempts and gave the answer even though I still had 1 attempt left.
 
 **Bug Reproduction Log**
 
@@ -14,9 +17,9 @@ Document at least 3 bugs you found. Add rows as needed.
 
 | Input | Expected Behavior | Actual Behavior | Console Output / Error |
 |-------|-------------------|-----------------|------------------------|
-| | | | |
-| | | | |
-| | | | |
+|guess of 1 | Put a number between 1 and 100 "Go lower" hint shown| none|
+|Guess of 0 | Put a number between 1-100 | "Go lower" hitn shown| none|
+| guess of 51| Go higher, 1 attempt left| "Go lower" hint shown|Out of attempts |
 
 ---
 
