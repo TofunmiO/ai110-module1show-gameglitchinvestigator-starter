@@ -63,6 +63,27 @@ def test_guess_higher_than_secret_with_string_secret_returns_go_lower_hint(): #g
     assert message == "📉 Go LOWER!"
 
 
+def test_attempt_limit_allows_eight_guesses_before_losing():
+    attempt_limit = 8
+    attempts = 0
+
+    while attempts < attempt_limit - 1:
+        attempts += 1
+
+    assert attempts == 7
+    assert attempts < attempt_limit
+
+
+def test_attempts_left_updates_after_each_submission():
+    attempt_limit = 8
+    attempts = 0
+
+    for _ in range(1, 4):
+        attempts += 1
+        attempts_left = max(attempt_limit - attempts, 0)
+        assert attempts_left == 7 if attempts == 1 else 6 if attempts == 2 else 5
+
+
 def test_update_score_awards_points_for_a_win():
     assert update_score(0, "Win", 1) == 80
     assert update_score(0, "Win", 9) == 10

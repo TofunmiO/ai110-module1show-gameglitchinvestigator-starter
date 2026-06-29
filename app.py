@@ -32,7 +32,7 @@ if "secret" not in st.session_state:
     st.session_state.secret = random.randint(low, high)
 
 if "attempts" not in st.session_state:
-    st.session_state.attempts = 1
+    st.session_state.attempts = 0
 
 if "score" not in st.session_state:
     st.session_state.score = 0
@@ -44,11 +44,6 @@ if "history" not in st.session_state:
     st.session_state.history = []
 
 st.subheader("Make a guess")
-
-st.info(
-    f"Guess a number between 1 and 100. "
-    f"Attempts left: {attempt_limit - st.session_state.attempts}"
-)
 
 with st.expander("Developer Debug Info"):
     st.write("Secret:", st.session_state.secret)
@@ -72,7 +67,8 @@ with col3:
 
 if new_game:
     st.session_state.attempts = 0
-    st.session_state.secret = random.randint(1, 100)
+    st.session_state.secret = random.randint(low, high) #fixed using ai agent
+    st.session_state.status = "playing"
     st.success("New game started.")
     st.rerun()
 
@@ -85,6 +81,14 @@ if st.session_state.status != "playing":
 
 if submit:
     st.session_state.attempts += 1
+
+    attempts_left = max(attempt_limit - st.session_state.attempts, 0)
+    st.info(
+        f"Guess a number between 1 and 100. "
+        f"Attempts left: {attempts_left}"
+    )
+    if attempts_left == 1:
+        st.caption("Last attempt!")
 
     ok, guess_int, err = parse_guess(raw_guess, low, high)
 
@@ -114,14 +118,14 @@ if submit:
                 f"You won! The secret was {st.session_state.secret}. "
                 f"Final score: {st.session_state.score}"
             )
-        else:
-            if st.session_state.attempts >= attempt_limit:
-                st.session_state.status = "lost"
-                st.error(
-                    f"Out of attempts! "
-                    f"The secret was {st.session_state.secret}. "
-                    f"Score: {st.session_state.score}"
-                )
+#fix below using ai agent.
+    if st.session_state.status != "won" and st.session_state.attempts >= attempt_limit:
+        st.session_state.status = "lost"
+        st.error(
+            f"Out of attempts! The secret was {st.session_state.secret}. "
+            f"Score: {st.session_state.score}"
+        )
+        st.stop()
 
 st.divider()
 st.caption("Built by an AI that claims this code is production-ready.")
