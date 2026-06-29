@@ -26,18 +26,26 @@ It wrote the code, ran away, and now the game is unplayable.
 ## 📝 Document Your Experience
 
 - [ ] Describe the game's purpose.
+To guess a secret number
 - [ ] Detail which bugs you found.
+1- Wrong hint logic where if the guess was higher thn the secret it said go higher and if guess was lower than the secret number, it said go lower.
+2- It did not validate if guess was a valid guess like refusing any input outside 1-100.
 - [ ] Explain what fixes you applied.
+Corrected the hint logic and moved the function to logic_utils an dimporte dthe function in app.py.
+Added a validation to verify input under the function check_guess is valid and refuse invalid input.
+Made sure the attempt left was updating properly and exctly 8 attempts are given.
 
 ## 📸 Demo Walkthrough
 
 Describe your fixed game in numbered steps so a reader can follow along without watching a video:
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
+1. User can select a difficulty to guess a secret number from Easy (1-20) to Normal(1-100) to Hard (1,50)
+2. User sekectes Normal difficulty
+3. User enters a guess of 100
+3. Game hint says go lower
+4. User enters a guess of 51 -> "Too low"
+5. Score updates correctly by adding -5 points after each wrong guess
+6. Game ends after correct guess or after exhausting all 8 attemots, secret number is revealed and score is given.
 
 **Screenshot** *(optional)*: <!-- Insert a screenshot of your fixed, winning game here -->
 
